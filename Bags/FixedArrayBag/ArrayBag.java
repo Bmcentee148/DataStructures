@@ -43,7 +43,20 @@ public class ArrayBag<T> implements BagInterface<T> {
 
 	/** Removes all of the items from the bag */
 	public void clear() {
-		//TODO
+		@SuppressWarnings("unchecked")
+		T[] emptyBag = (T[])new Object[DEFAULT_CAPACITY];
+		bag = emptyBag;
+		numEntries  = 0;
+
+		/*	We could just continually remove until the bag is
+			empty. This is easier to program but is the bag is large
+			performance will drop.
+
+			while(!isEmpty()) {
+				remove();
+			}
+		*/
+
 	}
 
 	/** Adds a new item to the bag
@@ -62,8 +75,13 @@ public class ArrayBag<T> implements BagInterface<T> {
 	/** Removes an arbitrary item from the bag
 		@return the item removed from the bag if successfull, or null */
 	public T remove() {
-		//TODO
-		return null;
+		T removedEntry = null;
+		if(numEntries > 0){
+			removedEntry = bag[numEntries - 1];
+			bag[numEntries - 1] = null;
+			numEntries--;
+		}
+		return removedEntry;
 	}
 
 
@@ -71,27 +89,54 @@ public class ArrayBag<T> implements BagInterface<T> {
 		@param entry the item to be removed from the bag
 		@return the removed entry if successful, else null */
 	public T remove(T entry) {
-		//TODO
-		return null;
+		T removedEntry = null;
+		if(numEntries > 0) {
+			for(int i = 0; i < numEntries; i++) {
+				if(bag[i].equals(entry)) {
+					removedEntry = bag[i];
+					bag[i] = bag[numEntries - 1];
+					bag[numEntries - 1] = null;
+					numEntries --;
+					break;
+				}
+			}
+		}
+		return removedEntry;
 	}
 
 	/** Determines how many times the given item occurs in the bag
 		@param entry the item to be counted
 		@return the number of times entry appears in the bag */
 	public int getFrequencyOf(T entry) {
-		//TODO
-		return 0;
+		int freq = 0;
+		for(int i = 0; i < numEntries; i++) {
+			if(bag[i].equals(entry))
+				freq++;
+		}
+		return freq;
 	}
 
 	/** Determines whether or not the given item appears in the bag
 		@param entry the item to search for
 		@return true if the bag contains the item, else false */
 	public boolean contains(T entry) {
-		//TODO
-		return false;
+		boolean status = false;
+		for(int i = 0; i < numEntries; i++) {
+			if(bag[i].equals(entry)){
+				status = true;
+				break;
+			}
+		}
+		return status;
+
+		/*	This is faster to code but performs unecessary steps. If
+			the bag was big it would create a problem
+
+		return getFrequencyOf(entry) > 0;
+		*/
 	}
 
-	
+
 	/** Creates an array containing all of the elements in the bag
 		@return the newly allocated array containing all of the bags elements */
 	public T[] toArray() {
