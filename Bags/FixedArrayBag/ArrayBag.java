@@ -6,19 +6,32 @@
 
 public class ArrayBag<T> implements BagInterface<T> {
 
+	private static final int DEFAULT_CAPACITY = 20;
+	private T[] bag;
+	private int numEntries;
+
+	@SuppressWarnings("unchecked")
+	public ArrayBag(int capacity) {
+		//the cast is safe because the array contains null entries
+		T[] tempBag = (T[])new Object[capacity];  //unchecked cast
+		bag = tempBag;
+		numEntries = 0;
+	}
+
+	public ArrayBag() {
+		this(DEFAULT_CAPACITY); 
+	}
+
 	public int getCurrentSize() {
-		//TODO
-		return -1;
+		return numEntries;
 	}
 
 	public boolean isFull() {
-		//TODO
-		return false;
+		return numEntries == bag.length;
 	}
 
 	public boolean isEmpty() {
-		//TODO
-		return false;
+		return numEntries == 0;
 	}
 
 	public void clear() {
@@ -26,8 +39,13 @@ public class ArrayBag<T> implements BagInterface<T> {
 	}
 
 	public boolean add(T newEntry) {
-		//TODO
-		return false;
+		boolean status = false;
+		if(newEntry!= null && !isFull()) {
+			bag[numEntries] = newEntry;
+			numEntries++;
+			status = true;
+		}
+		return status;
 	}
 
 	public T remove() {
@@ -51,8 +69,11 @@ public class ArrayBag<T> implements BagInterface<T> {
 	}
 
 	public T[] toArray() {
-		//TODO
-		return null;
+		@SuppressWarnings("unchecked")
+		T[] result = (T[])new Object[numEntries];
+		for(int i = 0; i < numEntries; i++)
+			result[i] = (T)bag[i];
+		return result;
 	}
 
 
