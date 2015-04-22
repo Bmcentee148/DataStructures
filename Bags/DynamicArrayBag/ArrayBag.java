@@ -75,7 +75,13 @@ public class ArrayBag<T> implements BagInterface<T> {
 	/** Removes an arbitrary item from the bag
 		@return the item removed from the bag if successfull, or null */
 	public T remove() {
-		return removeFromIndex(numEntries - 1);
+		T removedEntry = null;
+		if(numEntries > 0){
+			removedEntry = bag[numEntries - 1];
+			bag[numEntries - 1] = null;
+			numEntries--;
+		}
+		return removedEntry;
 	}
 
 
@@ -83,24 +89,19 @@ public class ArrayBag<T> implements BagInterface<T> {
 		@param entry the item to be removed from the bag
 		@return the removed entry if successful, else null */
 	public T remove(T entry) {
-		/*
-			T removedEntry = null;
-			if(numEntries > 0) {
-				for(int i = 0; i < numEntries; i++) {
-					if(bag[i].equals(entry)) {
-						removedEntry = bag[i];
-						bag[i] = bag[numEntries - 1];
-						bag[numEntries - 1] = null;
-						numEntries --;
-						break;
-					}
+		T removedEntry = null;
+		if(numEntries > 0) {
+			for(int i = 0; i < numEntries; i++) {
+				if(bag[i].equals(entry)) {
+					removedEntry = bag[i];
+					bag[i] = bag[numEntries - 1];
+					bag[numEntries - 1] = null;
+					numEntries --;
+					break;
 				}
 			}
-			return removedEntry;
-		*/
-		int index = getIndexOf(entry);
-		return removeFromIndex(index);
-
+		}
+		return removedEntry;
 	}
 
 	/** Determines how many times the given item occurs in the bag
@@ -119,8 +120,20 @@ public class ArrayBag<T> implements BagInterface<T> {
 		@param entry the item to search for
 		@return true if the bag contains the item, else false */
 	public boolean contains(T entry) {
-		return getIndexOf(entry) > -1;
-		
+		boolean status = false;
+		for(int i = 0; i < numEntries; i++) {
+			if(bag[i].equals(entry)){
+				status = true;
+				break;
+			}
+		}
+		return status;
+
+		/*	This is faster to code but performs unecessary steps. If
+			the bag was big it would create a problem
+
+		return getFrequencyOf(entry) > 0;
+		*/
 	}
 
 
@@ -137,34 +150,9 @@ public class ArrayBag<T> implements BagInterface<T> {
 		return Arrays.copyOf(bag,numEntries); //quicker
 	}
 
-	/** Finds the index of the given entry
-		@param entry the element to look for
-		@return the integer index of the entry in the array if contained, else -1 */
-	private int getIndexOf(T entry) {
-		int index = -1;
-		for(int i = 0; i < numEntries; i++){
-			if(bag[i].equals(entry)){
-				index = i;
-				break;
-			}
-		}
-		return index;
-	}
 
-	/** Removes the element at the given entry from the array, and
-		replaces it with the arrays last element.
-		@param index the integer index of the element in the array to be removed
-		@return the object removed from the array */
-	private T removeFromIndex(int index) {
-		T removedEntry = null;
-		if(index >=0 && index < numEntries) {
-			this.numEntries --;
-			removedEntry = this.bag[index];
-			this.bag[index] = this.bag[numEntries];
-			this.bag[numEntries] = null; 
-		}
-		return removedEntry;
-	}
+
+
 
 
 }
