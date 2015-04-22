@@ -83,24 +83,8 @@ public class ArrayBag<T> implements BagInterface<T> {
 		@param entry the item to be removed from the bag
 		@return the removed entry if successful, else null */
 	public T remove(T entry) {
-		/*
-			T removedEntry = null;
-			if(numEntries > 0) {
-				for(int i = 0; i < numEntries; i++) {
-					if(bag[i].equals(entry)) {
-						removedEntry = bag[i];
-						bag[i] = bag[numEntries - 1];
-						bag[numEntries - 1] = null;
-						numEntries --;
-						break;
-					}
-				}
-			}
-			return removedEntry;
-		*/
 		int index = getIndexOf(entry);
 		return removeFromIndex(index);
-
 	}
 
 	/** Determines how many times the given item occurs in the bag
