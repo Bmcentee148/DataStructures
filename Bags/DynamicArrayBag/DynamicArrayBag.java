@@ -5,21 +5,21 @@
 */
 import java.util.Arrays;
 
-public class ArrayBag<T> implements BagInterface<T> {
+public class DynamicArrayBag<T> implements BagInterface<T> {
 
 	private static final int DEFAULT_CAPACITY = 20;
 	private T[] bag;
 	private int numEntries;
 
 	@SuppressWarnings("unchecked")
-	public ArrayBag(int capacity) {
+	public DynamicArrayBag(int capacity) {
 		//the cast is safe because the array contains null entries
 		T[] tempBag = (T[])new Object[capacity];  //unchecked cast
 		bag = tempBag;
 		numEntries = 0;
 	}
 
-	public ArrayBag() {
+	public DynamicArrayBag() {
 		this(DEFAULT_CAPACITY); 
 	}
 
@@ -32,7 +32,7 @@ public class ArrayBag<T> implements BagInterface<T> {
 	/** Determines whether or not the bag is full
 		@return true if the bag is full, else false */
 	public boolean isFull() {
-		return numEntries == bag.length;
+		return false;
 	}
 
 	/** Determines whether or not the bag is empty
@@ -64,7 +64,8 @@ public class ArrayBag<T> implements BagInterface<T> {
 		@return true if the item was successfully added, else false */
 	public boolean add(T newEntry) {
 		boolean status = false;
-		if(newEntry!= null && !isFull()) {
+		ensureCapacity();
+		if(newEntry!= null) {
 			bag[numEntries] = newEntry;
 			numEntries++;
 			status = true;
@@ -149,6 +150,13 @@ public class ArrayBag<T> implements BagInterface<T> {
 		}
 		return removedEntry;
 	}
+
+	//Doubles the size of the array if full
+	private void ensureCapacity() {
+		if(numEntries == bag.length)
+			bag = Arrays.copyOf(bag,2 * numEntries);
+	}
+
 
 
 }
