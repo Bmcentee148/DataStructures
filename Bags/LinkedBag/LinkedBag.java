@@ -4,25 +4,30 @@
 
 public class LinkedBag<T> implements BagInterface<T> {
 
+    private Node headNode;
+    private int numEntries;
+
+    public LinkedBag() {
+        headNode = null;
+        numEntries = 0;
+    }
+
     /** Gets the current number of entries in the bag
         @return the integer number of entries in the bag */
     public int getCurrentSize(){
-        //TODO
-        return -1;
+       return numEntries;
     }
 
     /** Determines whether or not the bag is full
         @return true if the bag is full, else false */
     public boolean isFull(){
-        //TODO
         return false;
     }
 
     /** Determines whether or not the bag is empty
         @return true if the bag is empty, else false */
     public boolean isEmpty(){
-        //TODO
-        return false;
+        return numEntries == 0;
     }
 
     /** Removes all of the items from the bag */
@@ -34,8 +39,10 @@ public class LinkedBag<T> implements BagInterface<T> {
         @param newEntry the item to add to the bag
         @return true if the item was successfully added, else false */
     public boolean add(T newEntry){
-        //TODO
-        return false;
+        Node newNode = new Node(newEntry,headNode);
+        headNode = newNode;
+        numEntries++;
+        return true;
     }
 
     /** Removes an arbitrary item from the bag
