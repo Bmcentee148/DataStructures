@@ -48,8 +48,12 @@ public class LinkedBag<T> implements BagInterface<T> {
     /** Removes an arbitrary item from the bag
         @return the item removed from the bag if successfull, or null */
     public T remove(){
-        //TODO
-        return null;
+        Node removedNode = headNode;
+        T removedData = headNode.data;
+        headNode = headNode.nextNode;
+        removedNode = null;
+        numEntries--;
+        return removedData;
     }
 
     /** Removes one occurrence of the given item from the bag
@@ -79,8 +83,18 @@ public class LinkedBag<T> implements BagInterface<T> {
     /** Creates an array containing all of the elements in the bag
         @return the newly allocated array containing all of the bags elements */
     public T[] toArray(){
-        //TODO
-        return null;
+        @SuppressWarnings("unchecked")
+        T[] entries = (T[])new Object[numEntries];
+
+        Node currentNode = headNode;
+        int index = 0;
+        while(index < numEntries && currentNode != null) {
+            entries[index] = currentNode.data;
+            index++;
+            currentNode = currentNode.nextNode;
+        }
+        
+        return entries;
     }
 
     //private inner utility class for linking data
