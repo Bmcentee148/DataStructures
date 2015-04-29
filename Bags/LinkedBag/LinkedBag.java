@@ -49,10 +49,13 @@ public class LinkedBag<T> implements BagInterface<T> {
         @return the item removed from the bag if successfull, or null */
     public T remove(){
         Node removedNode = headNode;
-        T removedData = headNode.data;
-        headNode = headNode.nextNode;
-        removedNode = null;
-        numEntries--;
+        T removedData = null;
+        if(numEntries > 0 && headNode != null){
+            removedData = removedNode.data;
+            headNode = headNode.nextNode;
+            removedNode = null;
+            numEntries--;
+        }
         return removedData;
     }
 
