@@ -71,16 +71,34 @@ public class LinkedBag<T> implements BagInterface<T> {
         @param entry the item to be counted
         @return the number of times entry appears in the bag */
     public int getFrequencyOf(T entry){
-        //TODO
-        return -1;
+        Node currentNode = headNode;
+        int counter = 0, freq = 0;
+        while(counter < numEntries && currentNode != null) {
+            if(currentNode.data.equals(entry)){
+                freq++;
+            }
+            currentNode = currentNode.nextNode;
+            counter++;
+        }
+       return freq;
     }
 
     /** Determines whether or not the given item appears in the bag
         @param entry the item to search for
         @return true if the bag contains the item, else false */
     public boolean contains(T entry){
-        //TODO
-        return false;
+        Node currentNode = headNode;
+        boolean contained = false;
+        int counter = 0;
+        while(counter < numEntries && currentNode != null) {
+            if(currentNode.data.equals(entry)){
+                contained = true;
+                break;
+            }
+            currentNode = currentNode.nextNode;
+            counter++;
+        }
+        return contained;
     }
 
     /** Creates an array containing all of the elements in the bag
