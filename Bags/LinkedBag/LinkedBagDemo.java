@@ -27,6 +27,14 @@ public class LinkedBagDemo {
         System.out.println(testBag.getFrequencyOf("Hello")); //1
         System.out.println(testBag.getFrequencyOf("World")); //2
         System.out.println(testBag.getFrequencyOf("is")); //3
+
+        displayBag(testBag);
+
+        testBag.remove("World");
+        testBag.remove("is");
+        testBag.remove("not in here");
+
+        displayBag(testBag);
     }
     public static void displayBag(LinkedBag strings) {
         System.out.println(Arrays.toString(strings.toArray()));

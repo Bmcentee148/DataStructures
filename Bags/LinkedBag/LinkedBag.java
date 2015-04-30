@@ -63,8 +63,24 @@ public class LinkedBag<T> implements BagInterface<T> {
         @param entry the item to be removed from the bag
         @return the removed entry if successful, else null */
     public T remove(T entry){
-        //TODO
-        return null;        
+        T removedEntry = null;
+        Node currentNode = headNode, prevNode = null;
+        Node removedNode = null;
+        int counter = 0;
+        while(counter < numEntries && currentNode != null) {
+            if(currentNode.data.equals(entry)) {
+                removedNode = currentNode;
+                removedEntry = removedNode.data;
+                prevNode.nextNode = currentNode.nextNode;
+                removedNode = null;
+                numEntries--;
+                break;
+            }
+            prevNode = currentNode;
+            currentNode = currentNode.nextNode;
+            counter++;
+        }
+        return removedEntry;
     }
 
     /** Determines how many times the given item occurs in the bag
